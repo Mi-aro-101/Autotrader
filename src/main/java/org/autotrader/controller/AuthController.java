@@ -11,6 +11,7 @@ import org.autotrader.model.Role;
 import org.autotrader.model.Utilisateur;
 import org.autotrader.repository.RoleRepository;
 import org.autotrader.repository.UtilisateurRepository;
+import org.autotrader.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(path="/api/auth")
-public class LoginController {
+public class AuthController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -40,10 +41,7 @@ public class LoginController {
 	private UtilisateurRepository utilisateurRepository;
 	
 	@Autowired
-	private RoleRepository roleRepository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private AuthService authService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
@@ -67,17 +65,8 @@ public class LoginController {
 			if(utilisateurRepository.findByEmail(signupDto.getEmail()) != null) {
 				return new ResponseEntity<>("L'utilisateur existe deja", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			Utilisateur user = new Utilisateur();
 			
-			user.setEmail(signupDto.getEmail());
-			String pass = passwordEncoder.encode(signupDto.getPassword());
-			user.setPassword(pass);
-			
-			Role role = roleRepository.findByDesignation("Client");
-			user.setRoles(Collections.singleton(role));
-			
-			utilisateurRepository.save(user);
-			
+			authService.newUser(signupDto);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

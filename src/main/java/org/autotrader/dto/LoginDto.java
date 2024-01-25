@@ -9,11 +9,11 @@ package org.autotrader.dto;
  */
 public class LoginDto {
 
-	private String email;
-	private String password;
+	String email;
+	String password;
 	
 	public LoginDto() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public String getEmail() {
@@ -24,12 +24,12 @@ public class LoginDto {
 		return password;
 	}
 	
-	public void setEmail(String email) {
+	public void setEmail(String email)throws Exception {
 		this.email = email;
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(String password) throws Exception{
 		this.password = password;
 	}
-	
+
 }
