@@ -3,7 +3,6 @@
  */
 package org.autotrader.model;
 
-import org.hibernate.annotations.Collate;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Column;
