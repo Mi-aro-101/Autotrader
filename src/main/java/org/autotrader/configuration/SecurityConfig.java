@@ -3,6 +3,7 @@
  */
 package org.autotrader.configuration;
 
+import org.autotrader.service.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -43,7 +42,8 @@ public class SecurityConfig{
 	public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
 		http
 		.authorizeHttpRequests((requests) -> requests
-			.requestMatchers("/api/auth/**").permitAll()
+			.requestMatchers("/api/auth/**", "/api/public/**").permitAll()
+			.requestMatchers("/api/private/**").hasAnyRole("Administrateur")
 			.anyRequest().authenticated()
 		).csrf(AbstractHttpConfigurer::disable);
 		 		
