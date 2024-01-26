@@ -3,11 +3,7 @@
  */
 package org.autotrader.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.autotrader.dto.AnnonceDto;
-import org.autotrader.model.Annonce;
 import org.autotrader.service.AnnonceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 @RestController
-@RequestMapping(path="/api/annonce/")
+@RequestMapping(path="/api/")
 public class AnnonceController {
 
 	@Autowired
 	AnnonceService annonceService;
 	
-	@PostMapping("")
+	@PostMapping("annonce")
 	public ResponseEntity<?> publierAnnonce(@RequestBody AnnonceDto annonceDto, MultipartFile[] files){
 		
 		try {
@@ -43,7 +39,7 @@ public class AnnonceController {
 		
 	}
 	
-	@GetMapping("")
+	@GetMapping("public/annonce")
 	public ResponseEntity<?> voirAnnonce(){
 		try {
 			
