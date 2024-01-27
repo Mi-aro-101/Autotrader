@@ -4,7 +4,9 @@
  */
 package org.autotrader.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -55,7 +57,10 @@ public class Annonce {
 	double tarif;
 	
 	@Column(name="date_annonce")
-	LocalDateTime dateAnnonce;
+	LocalDate dateAnnonce;
+	
+	@Column(name="temps_annonce")
+	LocalTime tempsAnnonce;
 	
 	@Column(name="etat")
 	Integer etat;
@@ -115,8 +120,12 @@ public class Annonce {
 		return tarif;
 	}
 	
-	public LocalDateTime getDateAnnonce() {
+	public LocalDate getDateAnnonce() {
 		return dateAnnonce;
+	}
+	
+	public LocalTime getTempsAnnonce() {
+		return tempsAnnonce;
 	}
 	
 	public Integer getEtat() {
@@ -176,8 +185,12 @@ public class Annonce {
 		this.tarif = tarif;
 	}
 	
-	public void setDateAnnonce(LocalDateTime dateAnnonce) {
+	public void setDateAnnonce(LocalDate dateAnnonce) {
 		this.dateAnnonce = dateAnnonce;
+	}
+	
+	public void setTempsAnnonce(LocalTime tempsAnnonce) {
+		this.tempsAnnonce = tempsAnnonce;
 	}
 	
 	public void setEtat(Integer etat) {
