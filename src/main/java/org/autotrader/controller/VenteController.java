@@ -23,11 +23,22 @@ public class VenteController {
 	@Autowired
 	VenteService venteService;
 	
-	@PostMapping("")
-	public ResponseEntity<?> vendre(@RequestParam Integer idAnnonce, @RequestParam Integer idUtilisateur){
+	@PostMapping("/propser")
+	public ResponseEntity<?> proposer(@RequestParam Integer idAnnonce, Integer idUtilisateur){
 		try {
 			
-			return venteService.vendre(idAnnonce, idUtilisateur);
+			return venteService.propositionVente(idAnnonce, idUtilisateur);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/vendre")
+	public ResponseEntity<?> vendre(@RequestParam Integer idVente){
+		try {
+			
+			return venteService.vendre(idVente);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
