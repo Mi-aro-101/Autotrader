@@ -50,17 +50,9 @@ public class VenteService {
 		return result;
 	}
 	
-	@Transactional
-	public ResponseEntity<?> vendre(Integer idAnnonce, Integer idUtilisateur)throws Exception{
-		
-		
+	public ResponseEntity<?> propositionVente(Integer idAnnonce, Integer idUtilisateur)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow();
 		Utilisateur acheteur = utilisateurRepository.findById(idUtilisateur).orElseThrow();
-		
-		double prixVente = annonce.getTarif();
-
-		// Prendre la commission correspondant pour avoir sa pourcentage a payer
-		Commission commssion = commissionRepository.getCommissionCorrespondant(annonce.getTarif()).orElseThrow();
 		
 		Integer venteId = venteRepository.getVenteSeq();
 		Vente vente = new Vente();
@@ -69,15 +61,25 @@ public class VenteService {
 		vente.setIdVente(venteId);
 		vente.setUtilisateur(acheteur);
 		
+		return new ResponseEntity<>("Votre demande a ete tramsmis au vendeur, merci", HttpStatus.OK);
+	}
+	
+	@Transactional
+	public ResponseEntity<?> vendre(Integer idVente)throws Exception{
+		
+		Vente vente = venteRepository.findById(idVente).orElseThrow();
+		
+		// Prendre la commission correspondant pour avoir sa pourcentage a payer
+		Commission commssion = commissionRepository.getCommissionCorrespondant(vente.getAnnonce().getTarif()).orElseThrow();
+		
 		CommissionVente commissionVente = new CommissionVente();
 		commissionVente.setIdCommissionVente(null);
 		// 5 non payee et 10 payee
 		commissionVente.setStatut(5);
 		commissionVente.setVente(vente);
-		double tarifCommission = this.calculTarifCommission(prixVente, commssion.getPourcentage());
+		double tarifCommission = this.calculTarifCommission(vente.getAnnonce().getTarif(), commssion.getPourcentage());
 		commissionVente.setValeurCommission(tarifCommission);
 		
-		venteRepository.save(vente);
 		commissionVenteRepository.save(commissionVente);
 		
 		return new ResponseEntity<>("Vente effectues, veuillez payer "
