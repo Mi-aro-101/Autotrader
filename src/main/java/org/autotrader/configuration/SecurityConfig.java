@@ -3,6 +3,8 @@
  */
 package org.autotrader.configuration;
 
+import org.autotrader.configuration.jwt.AuthTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 /**
@@ -22,7 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
-	
+	@Autowired
+	AuthTokenFilter authTokenFilter;
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -37,11 +41,12 @@ public class SecurityConfig{
 	public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
 		http
 		.authorizeHttpRequests((requests) -> requests
-			.requestMatchers("/api/auth/**", "/api/public/**").permitAll()
+			.requestMatchers("/api/auth/**").permitAll()
 			.requestMatchers("/api/private/**").hasAnyRole("Administrateur")
 			.anyRequest().authenticated()
 		).csrf(AbstractHttpConfigurer::disable);
-		 		
+		http.addFilterAfter(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+		
 		return http.build();
 	}
 
