@@ -6,6 +6,7 @@ package org.autotrader.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.autotrader.configuration.jwt.JwtUtils;
 import org.autotrader.dto.AnnonceDto;
 import org.autotrader.model.Annonce;
 import org.autotrader.model.Carburant;
@@ -26,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 /**
@@ -56,6 +58,12 @@ public class AnnonceService {
 	@Autowired
 	PhotoService photoService;
 	
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	JwtUtils jwt;
+	
 	/**
 	 * Insertion d'une annonce d'un utilisateur qui tente de publier une annonce, (annonce qui sera valider ou refuse par l'admin)
 	 * @param annonceDto
@@ -68,7 +76,7 @@ public class AnnonceService {
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
 		
 		// Get the actual user
-		Utilisateur user = (Utilisateur)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
 		
 //		Utilisateur user = utilisateurRepository.findById(2).orElseThrow(
 //				() ->
@@ -136,7 +144,7 @@ public class AnnonceService {
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow();
 		
 		// Utilisateur en token
-		Utilisateur user = utilisateurRepository.findById(1).orElseThrow();
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
 		///////////////////////
 		
 		Favori favori = new Favori();
