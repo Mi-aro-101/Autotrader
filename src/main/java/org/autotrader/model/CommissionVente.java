@@ -29,7 +29,7 @@ public class CommissionVente {
 	@JoinColumn(name="idvente")
 	Vente vente;
 	
-	@Column(name="valeur_commission")
+	@Column(name="valeur_comission")
 	double valeurCommission;
 	
 	@Column(name="statut")

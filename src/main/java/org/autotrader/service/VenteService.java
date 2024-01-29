@@ -3,6 +3,10 @@
  */
 package org.autotrader.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.autotrader.configuration.jwt.JwtUtils;
 import org.autotrader.model.Annonce;
 import org.autotrader.model.Commission;
 import org.autotrader.model.CommissionVente;
@@ -18,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 /**
@@ -42,6 +47,12 @@ public class VenteService {
 	@Autowired
 	AnnonceRepository annonceRepository;
 	
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	JwtUtils jwt;
+	
 	double calculTarifCommission(double tarif, int pourcentage) {
 		double result = 0;
 		
@@ -50,18 +61,22 @@ public class VenteService {
 		return result;
 	}
 	
-	public ResponseEntity<?> propositionVente(Integer idAnnonce, Integer idUtilisateur)throws Exception{
+	public ResponseEntity<?> propositionVente(Integer idAnnonce)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow();
-		Utilisateur acheteur = utilisateurRepository.findById(idUtilisateur).orElseThrow();
+		Utilisateur acheteur = jwt.getActualUser(request, utilisateurRepository);
+//		Utilisateur acheteur = utilisateurRepository.findById(idUtilisateur).orElseThrow();
 		
 		Integer venteId = venteRepository.getVenteSeq();
 		Vente vente = new Vente();
 		vente.setAnnonce(annonce);
 		
 		
-		vente.setDateVente(null);
+		LocalDate dateNow = LocalDate.now();
+		vente.setDateVente(dateNow);
 		vente.setIdVente(venteId);
 		vente.setUtilisateur(acheteur);
+		
+		venteRepository.save(vente);
 				
 		return new ResponseEntity<>("Votre demande a ete tramsmis au vendeur, merci", HttpStatus.OK);
 	}
@@ -87,6 +102,13 @@ public class VenteService {
 		return new ResponseEntity<>("Vente effectues, veuillez payer "
 				+ "votre commission de valeur : "+commissionVente.getValeurCommission(), HttpStatus.OK);
 		
+	}
+	
+	public ResponseEntity<?> getDemandeVente()throws Exception{
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
+		List<Vente> demandes = venteRepository.getDemande(user.getIdUtilisateur());
+		
+		return new ResponseEntity<>(demandes, HttpStatus.OK);
 	}
 	
 }

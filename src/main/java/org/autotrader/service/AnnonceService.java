@@ -135,7 +135,7 @@ public class AnnonceService {
 	 */
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
-		annonceRepository.findAll().forEach(annonces::add);
+		annonceRepository.findByEtat(10).forEach(annonces::add);
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
@@ -207,7 +207,7 @@ public class AnnonceService {
 				()-> 
 				new Exception("L'annonce a valider n'existe pas id : "+idAnnonce)
 				);
-		annonce.setEtat(5);
+		annonce.setEtat(0);
 		
 		annonceRepository.save(annonce);
 		

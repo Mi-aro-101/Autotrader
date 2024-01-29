@@ -29,7 +29,7 @@ public class Commission {
 	@Column(name="max_tarif")
 	double maxTarif;
 	
-	@Column(name="purcentage")
+	@Column(name="pourcentage")
 	int pourcentage;
 	
 	public Commission() {
