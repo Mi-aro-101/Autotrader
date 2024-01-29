@@ -10,10 +10,12 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserDetailsImpl extends User implements UserDetails {
+
+public class UserDetailsImpl  implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	private int id;

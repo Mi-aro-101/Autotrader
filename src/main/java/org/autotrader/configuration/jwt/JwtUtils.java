@@ -21,32 +21,12 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils {
 	
 	 private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-//
-//	  @Value("${autotrader.app.jwtSecret}")
-//	  private String jwtSecret;
-//
-//	  @Value("${autotrader.app.jwtExpirationMs}")
-//	  private int jwtExpirationMs;
-//
-//	  public String generateJwtToken(Authentication authentication) {
-//		System.out.println(authentication.getPrincipal().getClass().getName());
-//	    UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-////		User userPrincipal = (User) authentication.getPrincipal();
-//
-//	    return Jwts.builder()
-//	        .setSubject((userPrincipal.getEmail()))
-//	        .setIssuedAt(new Date())
-//	        .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-//	        .signWith(key(), SignatureAlgorithm.HS256)
-//	        .compact();
-//	  }
-//	  
-//
+
 	  public String getUserNameFromJwtToken(String token) {
 	    return Jwts.parserBuilder().setSigningKey(key()).build()
 	               .parseClaimsJws(token).getBody().getSubject();
 	  }
-//	  
+	  
   public boolean validateJwtToken(String authToken) {
 		    try {
 		      Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
