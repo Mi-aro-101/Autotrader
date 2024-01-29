@@ -59,15 +59,23 @@ public class AnnonceService {
 	public ResponseEntity<?> save(AnnonceDto annonceDto /*, MultipartFile[] files*/)throws Exception{
 		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
-		Utilisateur user = utilisateurRepository.findById(1).orElseThrow();
+		Utilisateur user = utilisateurRepository.findById(2).orElseThrow(
+				() ->
+				new Exception("L'utilisateur essayant de publier n'existe pas"));
 		///////////////////////////////////////////////////////////////////////
 		
 		// Get the id of the annonce actual
 		Integer idAnnonce = annonceRepository.getAnnonceSeq();
 		
-		Carburant carburant = carburantRepository.findById(annonceDto.getIdCarburant()).orElseThrow();
-		CategorieVoiture categorieVoiture = categorieVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow();
-		ModeleVoiture modeleVoiture = modeleVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow();
+		Carburant carburant = carburantRepository.findById(annonceDto.getIdCarburant()).orElseThrow(
+				() ->
+				new Exception("Carburant non valide id : "+annonceDto.getIdCarburant()));
+		CategorieVoiture categorieVoiture = categorieVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow(
+				() ->
+				new Exception("Categorie de voiture non valide id : "+annonceDto.getIdCategorieVoiture()));
+		ModeleVoiture modeleVoiture = modeleVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow(
+				() ->
+				new Exception("Modele de voiture non valide non valide id : "+annonceDto.getIdModeleVoiture()));
 		
 		Annonce annonce = new Annonce();
 		annonce.setIdAnnonce(idAnnonce);
