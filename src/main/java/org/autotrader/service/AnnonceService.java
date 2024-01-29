@@ -3,6 +3,8 @@
  */
 package org.autotrader.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,29 +57,41 @@ public class AnnonceService {
 	@Autowired
 	PhotoService photoService;
 	
-	@Transactional
 	public ResponseEntity<?> save(AnnonceDto annonceDto /*, MultipartFile[] files*/)throws Exception{
 		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
-		Utilisateur user = utilisateurRepository.findById(1).orElseThrow();
+		Utilisateur user = utilisateurRepository.findById(2).orElseThrow(
+				() ->
+				new Exception("Cet utilisateur qui poste n'existe pas"));
 		///////////////////////////////////////////////////////////////////////
 		
 		// Get the id of the annonce actual
 		Integer idAnnonce = annonceRepository.getAnnonceSeq();
-		
-		Carburant carburant = carburantRepository.findById(annonceDto.getIdCarburant()).orElseThrow();
-		CategorieVoiture categorieVoiture = categorieVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow();
-		ModeleVoiture modeleVoiture = modeleVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow();
+				
+		Carburant carburant = carburantRepository.findById(annonceDto.getIdCarburant()).orElseThrow(
+				() ->
+				new Exception("Ce carburant est invalide, id : "+annonceDto.getIdCarburant()));
+		CategorieVoiture categorieVoiture = categorieVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow(
+				() ->
+				new Exception("Cette categorie de voiture est invalide, id : "+annonceDto.getIdCategorieVoiture()));
+		ModeleVoiture modeleVoiture = modeleVoitureRepository.findById(annonceDto.getIdModeleVoiture()).orElseThrow(
+				() ->
+				new Exception("Cette modele de voiture est invalide, id : "+annonceDto.getIdModeleVoiture()));
 		
 		Annonce annonce = new Annonce();
 		annonce.setIdAnnonce(idAnnonce);
 		annonce.setUtilisateur(user);
 		annonce.setCarburant(carburant);
 		annonce.setCategorieVoiture(categorieVoiture);
-		annonce.setCategorieVoiture(categorieVoiture);
+		annonce.setModeleVoiture(modeleVoiture);
 		annonce.setAnnee(annonceDto.getAnnee());
-		annonce.setDateAnnonce(null);
-		annonce.setTempsAnnonce(null);
+		
+		LocalDate nowDate = LocalDate.now();
+		annonce.setDateAnnonce(nowDate);
+		
+		LocalTime nowTime = LocalTime.now();
+		annonce.setTempsAnnonce(nowTime);
+		
 		annonce.setDescriptionAnnonce(annonceDto.getDescriptionAnnonce());
 		// (Etat = 5) <=> Annonce en attente de validation par l'admin
 		annonce.setEtat(5);

@@ -37,7 +37,7 @@ public class AnnonceController {
 			return annonceService.save(annonceDto/*, files*/);
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
