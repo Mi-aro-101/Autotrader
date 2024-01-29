@@ -55,6 +55,12 @@ public class AnnonceService {
 	@Autowired
 	PhotoService photoService;
 	
+	/**
+	 * Insertion d'une annonce d'un utilisateur qui tente de publier une annonce, (annonce qui sera valider ou refuse par l'admin)
+	 * @param annonceDto
+	 * @return
+	 * @throws Exception
+	 */
 	@Transactional
 	public ResponseEntity<?> save(AnnonceDto annonceDto /*, MultipartFile[] files*/)throws Exception{
 		
@@ -103,6 +109,11 @@ public class AnnonceService {
 		
 	}
 	
+	/**
+	 * No auth :: obtenir toutes les annonces
+	 * @return
+	 * @throws Exception
+	 */
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
 		annonceRepository.findAll().forEach(annonces::add);
@@ -110,6 +121,12 @@ public class AnnonceService {
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
 	
+	/**
+	 * Favoriser une annonce
+	 * @param idAnnonce
+	 * @return
+	 * @throws Exception
+	 */
 	public ResponseEntity<?> favoriser(Integer idAnnonce)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow();
 		
@@ -126,6 +143,56 @@ public class AnnonceService {
 		
 		return new ResponseEntity<>("Annonce mis dans votre liste de favori", HttpStatus.OK);
 		
+	}
+	
+	/**
+	 * Admin : valider la publication d'une annonce
+	 * @param idAnnonce
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseEntity<?> valider(Integer idAnnonce)throws Exception{
+		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow(
+				()-> 
+				new Exception("L'annonce a valider n'existe pas id : "+idAnnonce)
+				);
+		annonce.setEtat(10);
+		
+		annonceRepository.save(annonce);
+		
+		return new ResponseEntity<>("Cette annonce a ete valide", HttpStatus.OK);
+		
+	}
+	
+	/**
+	 * Obtenir les demande de publication d'annonce
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseEntity<?> getAnnonceNonValide()throws Exception{
+		List<Annonce> annonces = new ArrayList<>();
+		annonceRepository.findByEtat(5).forEach(annonces::add);
+		
+		return new ResponseEntity<>(annonces, HttpStatus.OK);
+		
+	}
+	
+	/**
+	 * Admin : refuser la publication d'une annonce
+	 * @param idAnnonce
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseEntity<?> refuser(Integer idAnnonce)throws Exception{
+		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow(
+				()-> 
+				new Exception("L'annonce a valider n'existe pas id : "+idAnnonce)
+				);
+		annonce.setEtat(5);
+		
+		annonceRepository.save(annonce);
+		
+		return new ResponseEntity<>("Cette annonce a ete refuser", HttpStatus.OK);
 	}
 	
 }

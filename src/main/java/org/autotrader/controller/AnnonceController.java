@@ -62,5 +62,38 @@ public class AnnonceController {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PutMapping("annonce/valider/{id}")
+	public ResponseEntity<?> valider(@PathVariable Integer idAnnonce){
+		try {
+			
+			return annonceService.valider(idAnnonce);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping("annonce/refuser/{id}")
+	public ResponseEntity<?> refuser(@PathVariable Integer idAnnonce){
+		try {
+			
+			return annonceService.refuser(idAnnonce);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 		
+	
+	@GetMapping("annonce/nonvalide")
+	public ResponseEntity<?> getAnnonceNonValide(){
+		try {
+			
+			return annonceService.getAnnonceNonValide();
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
