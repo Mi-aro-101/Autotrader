@@ -22,6 +22,7 @@ import org.autotrader.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,9 +66,13 @@ public class AnnonceService {
 	public ResponseEntity<?> save(AnnonceDto annonceDto /*, MultipartFile[] files*/)throws Exception{
 		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
-		Utilisateur user = utilisateurRepository.findById(2).orElseThrow(
-				() ->
-				new Exception("L'utilisateur essayant de publier n'existe pas"));
+		
+		// Get the actual user
+		Utilisateur user = (Utilisateur)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+//		Utilisateur user = utilisateurRepository.findById(2).orElseThrow(
+//				() ->
+//				new Exception("L'utilisateur essayant de publier n'existe pas"));
 		///////////////////////////////////////////////////////////////////////
 		
 		// Get the id of the annonce actual
