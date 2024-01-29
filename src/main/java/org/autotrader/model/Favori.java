@@ -24,11 +24,11 @@ public class Favori {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="idfavor")
+	@Column(name="idfavori")
 	Integer idFavori;
 	
 	@ManyToOne
-	@JoinColumn(name="idUtilisateur")
+	@JoinColumn(name="idutilisateur")
 	Utilisateur utilisateur;
 	
 	@ManyToOne

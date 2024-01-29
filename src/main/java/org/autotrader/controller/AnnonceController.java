@@ -53,9 +53,10 @@ public class AnnonceController {
 		}
 	}
 	
-	@PutMapping("annonce/{id}")
-	public ResponseEntity<?> toFavori(@PathVariable Integer idAnnonce){
+	@PostMapping("annonce/{id}")
+	public ResponseEntity<?> toFavori(@PathVariable String id){
 		try {
+			Integer idAnnonce = Integer.parseInt(id);
 			return annonceService.favoriser(idAnnonce);
 			
 		} catch (Exception e) {

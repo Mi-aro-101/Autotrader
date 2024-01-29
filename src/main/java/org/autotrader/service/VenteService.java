@@ -57,6 +57,8 @@ public class VenteService {
 		Integer venteId = venteRepository.getVenteSeq();
 		Vente vente = new Vente();
 		vente.setAnnonce(annonce);
+		
+		
 		vente.setDateVente(null);
 		vente.setIdVente(venteId);
 		vente.setUtilisateur(acheteur);
