@@ -82,7 +82,7 @@ public class AnnonceService {
 		annonce.setUtilisateur(user);
 		annonce.setCarburant(carburant);
 		annonce.setCategorieVoiture(categorieVoiture);
-		annonce.setCategorieVoiture(categorieVoiture);
+		annonce.setModeleVoiture(modeleVoiture);
 		annonce.setAnnee(annonceDto.getAnnee());
 		annonce.setDateAnnonce(null);
 		annonce.setTempsAnnonce(null);
