@@ -60,7 +60,7 @@ public class VenteService {
 		vente.setDateVente(null);
 		vente.setIdVente(venteId);
 		vente.setUtilisateur(acheteur);
-		
+				
 		return new ResponseEntity<>("Votre demande a ete tramsmis au vendeur, merci", HttpStatus.OK);
 	}
 	

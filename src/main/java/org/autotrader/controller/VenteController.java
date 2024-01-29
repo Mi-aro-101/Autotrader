@@ -23,7 +23,7 @@ public class VenteController {
 	@Autowired
 	VenteService venteService;
 	
-	@PostMapping("/propser")
+	@PostMapping("/proposer")
 	public ResponseEntity<?> proposer(@RequestParam Integer idAnnonce, Integer idUtilisateur){
 		try {
 			
