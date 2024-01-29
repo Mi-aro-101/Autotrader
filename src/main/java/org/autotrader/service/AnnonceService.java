@@ -3,6 +3,8 @@
  */
 package org.autotrader.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,8 +105,12 @@ public class AnnonceService {
 		annonce.setCategorieVoiture(categorieVoiture);
 		annonce.setModeleVoiture(modeleVoiture);
 		annonce.setAnnee(annonceDto.getAnnee());
-		annonce.setDateAnnonce(null);
-		annonce.setTempsAnnonce(null);
+		
+		LocalDate dateNow = LocalDate.now();
+		annonce.setDateAnnonce(dateNow);
+		
+		LocalTime timeNow = LocalTime.now();
+		annonce.setTempsAnnonce(timeNow);
 		annonce.setDescriptionAnnonce(annonceDto.getDescriptionAnnonce());
 		// (Etat = 5) <=> Annonce en attente de validation par l'admin
 		annonce.setEtat(5);
