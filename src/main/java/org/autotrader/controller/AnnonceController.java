@@ -30,11 +30,11 @@ public class AnnonceController {
 	AnnonceService annonceService;
 	
 	@PostMapping("annonce")
-	public ResponseEntity<?> publierAnnonce(@RequestBody AnnonceDto annonceDto /*, MultipartFile[] files*/){
+	public ResponseEntity<?> publierAnnonce(@RequestBody AnnonceDto annonceDto , MultipartFile[] files){
 		
 		try {
 			
-			return annonceService.save(annonceDto/*, files*/);
+			return annonceService.save(annonceDto, files);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

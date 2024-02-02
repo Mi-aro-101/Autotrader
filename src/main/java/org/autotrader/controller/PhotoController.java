@@ -20,30 +20,20 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 @RestController
-@RequestMapping(path="/photo")
+@RequestMapping(path="/api/public/")
 public class PhotoController {
 
 	@Autowired
 	PhotoService photoService;
 	
-//	@PostMapping("")
-//	public ResponseEntity<?> insertPhotos(@RequestParam MultipartFile[] files){
-//		try {
-//			
-//			return photoService.savePhotos(files);
-//			
-//		} catch (Exception e) {
-//			return new ResponseEntity<String>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-	
-	@GetMapping("")
-	public ResponseEntity<?> getAllPhotos(){
+	@PostMapping("photo")
+	public ResponseEntity<?> insertPhotos(@RequestParam MultipartFile[] files){
 		try {
-			System.out.println(photoService.getPhotos());
-			return photoService.getPhotos();
+			
+			return photoService.savePhotos(files);
+			
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
