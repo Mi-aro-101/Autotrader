@@ -73,7 +73,7 @@ public class AnnonceService {
 	 * @throws Exception
 	 */
 	@Transactional
-	public ResponseEntity<?> save(AnnonceDto annonceDto /*, MultipartFile[] files*/)throws Exception{
+	public ResponseEntity<?> save(AnnonceDto annonceDto , MultipartFile[] files)throws Exception{
 		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
 		

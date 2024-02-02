@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "autotrader-4c574",
+  "private_key_id": "4d4e3903caca75e3bba730fff748dd06bf80ecc7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrD2FY60KW57HH\nWaB3lZalGJvZJA25+sq0eyLfdfmGwgabiLSJeuR/bm73J5yKDOu08vqgQnUzTrq0\nGVEiCl+s5Uud2eLGP1gN01ua4KsQcoUWQNy4YcKfoQwuYAo4QKd0+RYn6yr8a+pM\nsR2PXanWK4Xck3oPPg1dFjvtPcPyzL2wi20TigJkKDeKBiu38vt0cYyoKVqOQItr\nXEHohN4X7e5KqCLP4A3nPfkLPxGyDrVuH9juu5hv4W8i8gWFEUeodxXpPf+F2V0o\nU31aThOW/msU779iZHW+HLUNyRlA+a5hy10d+gt68V7oEELeq0pguhbzHcx6Zu0X\niH/stgexAgMBAAECggEAScXQTfDoPvydh0P4GJrC5WC/ld4erV6jnUKdv5G5k4yK\nHPnQIpqFgQ+3e4/xyvfXj6pavFLtCLujeZiRjQS8Tmx1OBaH3sfiydOlZh4OqIE7\nNGW0yzAeJ4nlHvr8bVY04hWqoHyjhUllOr4H6ZSTcnJCwOY5dellCghUv/QrVcKS\nEoQaZosEF/3iQL896FlLEHE4pmdKOdMr1Id50qsUDNjRcE7CME+FoWSNN7frhrJ4\ncrfFUJ5ax+N48vSVWPHI13GmN+KOAeKfZaQIO5j5lCHYC+MKRhdjwtrUjcSFot/v\ntC5BnfGeupaSd8eHet7WNnYo2KDbAnb6SXZyO/BTIQKBgQDeuCMOGCYWHkaaj0Z7\n/RYy/fCT9cRRPyPCddZhpqz0P+5iVX2RilLyiT1skg5QRau/zE8ZuHhaysu4uZk0\nOyX08NQEw5jhUO99X9efDJj7FSxAb0ZaX0DykiP/5ODUBi6D+97WQISDKYNDLadz\nz44frU3FlHuoZ/yObCvOumAeUwKBgQDEnxTaW1mup68WptOyjz+7Z4nNOXXE0xXH\nE+0S0ItoW+c3PfyIcKYyVCC7wDoSzuCcv+JatPYc6LSb58+4mjZgCe24u3wNbaTO\n+FlAfV/7L+kZNHOlayz84jhnses136lNuJ5vbCzitaqQ+5rimfY/A5irYCO9ARRj\nvNF2szfZawKBgQDFYKqwcvZN48bucsskVsa1qhbrCYNR/YLTc1rqb6wXShEZVGpT\n8SJRjw7AiS/mM9hhwc7YHIOM8uxYaSM9Bq48xLEhB7cU94VGtwmACsoIulrdP8A5\nlvEYCCufPFeDj3bpwO1bMxI8qy2I+4zLNcXejNe/ojd0p7NLBNJOAx3rwQKBgQCV\nMqmeL+dTksZXh+vn+K9Bw4VbhxiIbCyATex9dGX0oJhI4O55khFq60+TaIAouXbT\nOv/GGL8QnLw/+Z0z1UEhiycqIIo3nlWLAASp3PkyH97fU1/VzAftNLPca7Oxw7Ay\n277NieZdecCeF24mOPIUSuRUVrWHvAP+0s6XJdNhVQKBgGcp5sdslGxpp/Z4KaYe\nLMfP+F608oIAD3BVN47rgjU5PpqepBgrOdXvNLtqXy5eLf+vz/+o9CpxXWalqTF5\npzx3cIPkhfeOvoNEIt412GT4xQ5xzKeu2rqlDDAkpiiqLa72grZ2Z0wDKoRlFmMb\nKLE0CMBc3rqM/TWmODTIybsE\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-cvo2f@autotrader-4c574.iam.gserviceaccount.com",
+  "client_id": "105700133980859207478",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-cvo2f%40autotrader-4c574.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
