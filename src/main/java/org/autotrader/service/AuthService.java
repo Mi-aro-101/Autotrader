@@ -52,7 +52,9 @@ public class AuthService {
 		String pass = passwordEncoder.encode(signupDto.getPassword());
 		user.setPassword(pass);
 		
-		Role role = roleRepository.findByDesignation("Client");
+		Role role = roleRepository.findByDesignation("Client").orElseThrow(
+				() -> 
+				new Exception("Ce role attribue n'existe pas"));
 		user.setRoles(Collections.singleton(role));
 		
 		utilisateurRepository.save(user);

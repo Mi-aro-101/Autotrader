@@ -6,3 +6,9 @@ CREATE TABLE Favori(
     FOREIGN KEY(idutilisateur) REFERENCES utilisateur(idutilisateur),
     FOREIGN KEY(idannonce) REFERENCES annonce(idannonce)
 );
+
+CREATE TABLE Role(
+    idrole SERIAL NOT NULL,
+    designation VARCHAR(50) NOT NULL,
+    PRIMARY KEY(idrole)
+);

@@ -3,6 +3,8 @@
  */
 package org.autotrader.repository;
 
+import java.util.Optional;
+
 import org.autotrader.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-	Role findByDesignation(String designation);
+	Optional<Role> findByDesignation(String designation);
 	
 }
