@@ -43,15 +43,26 @@ public class PhotoService {
 	@Autowired
 	PhotoRepository photoRepository;
 	
-	public ResponseEntity<?> savePhotos(MultipartFile[] files/*, Annonce annonce*/)throws Exception{
+	public ResponseEntity<?> savePhotos(MultipartFile[] files, Annonce annonce)throws Exception{
 		
 		File[] fileStock = this.convertToFiles(files);
+		List<Photo> photos = new ArrayList<>();
 		
 		for(File file : fileStock) {
-			System.out.println(this.upload(file));
+			
+			Photo photo = new Photo();
+			photo.setIdPhoto(null);
+			photo.setAnnonce(annonce);
+			photo.setUrlPhoto(this.upload(file));
+			
+			photos.add(photo);
+			
+			file.delete();
 		}
 		
-		return new ResponseEntity<String>("Insertion avec success", HttpStatus.OK);
+		photoRepository.saveAll(photos);
+		
+		return new ResponseEntity<String>("Vos photos ont ete enregistrees", HttpStatus.OK);
 	}
 	
 	public String upload(File file)throws Exception{
@@ -67,6 +78,7 @@ public class PhotoService {
 		
 		String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/autotrader-4c574.appspot.com/o/%s?alt=media";
 		result = String.format(DOWNLOAD_URL, URLEncoder.encode(file.getName(), StandardCharsets.UTF_8));
+		
 		return result;
 	}
 	
