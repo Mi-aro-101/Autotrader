@@ -122,7 +122,7 @@ public class AnnonceService {
 		
 		annonceRepository.save(annonce);
 		
-//		photoService.savePhotos(files, annonce);
+		photoService.savePhotos(files, annonce);
 		
 		return new ResponseEntity<>("Insertion avec succes", HttpStatus.OK);
 		

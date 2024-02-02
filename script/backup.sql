@@ -354,12 +354,10 @@ ALTER SEQUENCE public.modele_voiture_idmodele_voiture_seq OWNED BY public.modele
 --
 
 CREATE TABLE public.photo (
-    size bigint NOT NULL,
-    contenttype character varying(255) NOT NULL,
-    id_photo character varying(255) NOT NULL,
-    name character varying(255) NOT NULL,
-    data oid,
-    idannonce integer NOT NULL
+    id_photo serial not null,
+    id_annonce integer not null,
+    url_photo VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_annonce) REFERENCES public.annonce (idannonce)
 );
 
 ALTER TABLE public.photo OWNER TO postgres;
