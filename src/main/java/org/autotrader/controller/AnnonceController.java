@@ -4,11 +4,11 @@
 package org.autotrader.controller;
 
 import org.autotrader.dto.AnnonceDto;
-import org.autotrader.model.Utilisateur;
 import org.autotrader.service.AnnonceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping(path="/api/")
+@CrossOrigin(origins ="*")
 public class AnnonceController {
 
 	@Autowired
