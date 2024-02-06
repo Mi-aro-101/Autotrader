@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping(path="/api/")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins = "*")
 public class AnnonceController {
 
 	@Autowired
