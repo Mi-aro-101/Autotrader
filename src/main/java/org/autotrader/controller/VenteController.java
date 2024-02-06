@@ -50,7 +50,7 @@ public class VenteController {
 		}
 	}
 	
-	@GetMapping("demande")
+	@GetMapping("/demande")
 	public ResponseEntity<?> getDemandeVente(){
 		try {
 			
@@ -61,7 +61,7 @@ public class VenteController {
 		}
 	}
 	
-	@GetMapping("mes/demandes/envoyes")
+	@GetMapping("/mes/demandes/envoyes")
 	public ResponseEntity<?> getMesDemandesEnvoyesPourAnnonceDesAutres(){
 		try {
 			
