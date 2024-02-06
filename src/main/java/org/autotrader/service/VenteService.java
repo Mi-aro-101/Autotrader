@@ -104,6 +104,11 @@ public class VenteService {
 		
 	}
 	
+	/**
+	 * Get all demande de vente recu par cet utilisateur via ces annonces
+	 * @return
+	 * @throws Exception
+	 */
 	public ResponseEntity<?> getDemandeVente()throws Exception{
 		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
 		List<Vente> demandes = venteRepository.getDemande(user.getIdUtilisateur());
