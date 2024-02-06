@@ -18,6 +18,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 	@Query(nativeQuery = true, value = "SELECT nextval('annonce_idannonce_seq')")
 	Integer getAnnonceSeq();
 	
+	@Query(value="SELECT a from Annonce a where a.etat=10")
 	List<Annonce> findByEtat(Integer etat);
 	
 }
