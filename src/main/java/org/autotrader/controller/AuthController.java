@@ -3,15 +3,11 @@
  */
 package org.autotrader.controller;
 
-import java.util.Collections;
 
 import org.autotrader.configuration.jwt.JwtUtils;
 import org.autotrader.dto.JwtResponse;
 import org.autotrader.dto.LoginDto;
 import org.autotrader.dto.SignupDto;
-import org.autotrader.model.Role;
-import org.autotrader.model.Utilisateur;
-import org.autotrader.repository.RoleRepository;
 import org.autotrader.repository.UtilisateurRepository;
 import org.autotrader.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
