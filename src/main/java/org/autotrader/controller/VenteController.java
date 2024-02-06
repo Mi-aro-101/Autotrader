@@ -50,11 +50,22 @@ public class VenteController {
 		}
 	}
 	
-	@GetMapping("")
+	@GetMapping("demande")
 	public ResponseEntity<?> getDemandeVente(){
 		try {
 			
 			return venteService.getDemandeVente();
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("mes/demandes/envoyes")
+	public ResponseEntity<?> getMesDemandesEnvoyesPourAnnonceDesAutres(){
+		try {
+			
+			return venteService.getDemandeEmvoyes();
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);

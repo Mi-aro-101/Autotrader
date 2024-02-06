@@ -116,4 +116,11 @@ public class VenteService {
 		return new ResponseEntity<>(demandes, HttpStatus.OK);
 	}
 	
+	public ResponseEntity<?> getMesDemandesEnvoyesPourAnnonceDesAutres()throws Exception{
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
+		List<Vente> demandes = venteRepository.getDemandeEnvoyes(user.getIdUtilisateur());
+		
+		return new ResponseEntity<>(demandes, HttpStatus.OK);
+	}
+	
 }
