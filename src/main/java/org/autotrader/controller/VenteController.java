@@ -65,7 +65,7 @@ public class VenteController {
 	public ResponseEntity<?> getMesDemandesEnvoyesPourAnnonceDesAutres(){
 		try {
 			
-			return venteService.getDemandeEmvoyes();
+			return venteService.getMesDemandesEnvoyesPourAnnonceDesAutres();
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
