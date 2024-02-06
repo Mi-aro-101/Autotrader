@@ -5,6 +5,7 @@ package org.autotrader.controller;
 
 import org.autotrader.dto.AnnonceDto;
 import org.autotrader.service.AnnonceService;
+import org.autotrader.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class AnnonceController {
 
 	@Autowired
 	AnnonceService annonceService;
+	
+	@Autowired
+	AuthService authService;
 	
 	@PostMapping("annonce")
 	public ResponseEntity<?> publierAnnonce(@RequestBody AnnonceDto annonceDto , MultipartFile[] files){

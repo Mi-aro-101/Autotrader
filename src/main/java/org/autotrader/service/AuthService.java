@@ -3,7 +3,9 @@
  */
 package org.autotrader.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.autotrader.dto.SignupDto;
 import org.autotrader.model.InfoUtilisateur;
@@ -70,6 +72,13 @@ public class AuthService {
 		infoUtilisateurRepository.save(infoUtilisateur);
 		
 		return new ResponseEntity<String>("Inscription avec success", HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> getUtilisateurs()throws Exception{
+		List<Utilisateur> utilisateurs = new ArrayList<>();
+		utilisateurRepository.findAll().forEach(utilisateurs::add);
+		
+		return new ResponseEntity<>(utilisateurs, HttpStatus.OK);
 	}
 	
 }

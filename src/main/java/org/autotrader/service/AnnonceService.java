@@ -14,12 +14,12 @@ import org.autotrader.model.Annonce;
 import org.autotrader.model.Carburant;
 import org.autotrader.model.CategorieVoiture;
 import org.autotrader.model.Favori;
-import org.autotrader.model.FavoriRepository;
 import org.autotrader.model.ModeleVoiture;
 import org.autotrader.model.Utilisateur;
 import org.autotrader.repository.AnnonceRepository;
 import org.autotrader.repository.CarburantRepository;
 import org.autotrader.repository.CategorieVoitureRepository;
+import org.autotrader.repository.FavoriRepository;
 import org.autotrader.repository.ModeleVoitureRepository;
 import org.autotrader.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,7 +135,12 @@ public class AnnonceService {
 	 */
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
-		annonceRepository.findByEtat(10).forEach(annonces::add);
+		annonceRepository.findAll().forEach(annonces::add);
+		
+//		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+//		utilisateurRepository.findAll().forEach(utilisateurs::add);
+		
+//		Annonce annonces = annonceRepository.findById(5).orElseThrow(() -> new Exception("No such annonce"));
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
