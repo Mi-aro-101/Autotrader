@@ -49,7 +49,7 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto){
 		
 		try {
