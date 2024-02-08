@@ -6,8 +6,8 @@ package org.autotrader.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,8 +20,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author miaro
@@ -68,27 +66,22 @@ public class Annonce {
 	
 	@ManyToOne
 	@JoinColumn(name="idutilisateur")
-	@Getter @Setter
 	Utilisateur utilisateur;
 	
 	@ManyToOne
 	@JoinColumn(name="idcarburant")
-	@Getter @Setter
 	Carburant carburant;
 	
 	@ManyToOne
 	@JoinColumn(name="idcategorie_voiture")
-	@Getter @Setter
 	CategorieVoiture categorieVoiture;
 	
 	@ManyToOne
 	@JoinColumn(name="idmodele_voiture")
-	@Getter @Setter
 	ModeleVoiture modeleVoiture;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "annonce", cascade = CascadeType.ALL)
-	@Getter @Setter
-	private Set<Photo> photos = new HashSet<>();
+	@OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Photo> photos;
 	
 	public Annonce() {
 		
@@ -154,9 +147,9 @@ public class Annonce {
 		return modeleVoiture;
 	}
 	
-//	public Set<Photo> getPhotos() {
-//		return photos;
-//	}
+	public List<Photo> getPhotos() {
+		return photos;
+	}
 	
 	public void setIdAnnonce(Integer idAnnonce) {
 		this.idAnnonce = idAnnonce;
@@ -219,7 +212,7 @@ public class Annonce {
 		this.modeleVoiture = modeleVoiture;
 	}
 	
-//	public void setPhotos(Set<Photo> photos) {
-//		this.photos = photos;
-//	}
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
 }

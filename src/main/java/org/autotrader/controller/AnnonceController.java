@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,14 +36,14 @@ public class AnnonceController {
 	AuthService authService;
 	
 	@PostMapping("annonce")
-	public ResponseEntity<?> publierAnnonce(@RequestBody AnnonceDto annonceDto , MultipartFile[] files){
+	public ResponseEntity<?> publierAnnonce(@RequestParam AnnonceDto annonceDto , @RequestParam MultipartFile[] files){
 		
 		try {
 			
 			return annonceService.save(annonceDto, files);
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(e.toString()+" : "+e.getMessage()+" : "+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
@@ -55,6 +56,18 @@ public class AnnonceController {
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+" : "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("annonce/{id}")
+	public ResponseEntity<?> detailsAnnonce(@PathVariable String id){
+		try {
+			
+			Integer idAnnonce = Integer.parseInt(id);
+			return annonceService.detailsAnnonce(idAnnonce);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -97,6 +110,17 @@ public class AnnonceController {
 		try {
 			
 			return annonceService.getAnnonceNonValide();
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("mes/annonces")
+	public ResponseEntity<?> getMyAnnonce(){
+		try {
+			
+			return annonceService.getMyAnnonce();
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);

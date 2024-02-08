@@ -4,10 +4,8 @@
 package org.autotrader.service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -30,16 +28,13 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-import org.springframework.util.StringUtils;
-
 /**
  * @author miaro
  *
  */
 @Service
 public class PhotoService {
-
-	String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/gs://autotrader-4c574.appspot.com/o/%s?alt=media";
+	
 	@Autowired
 	PhotoRepository photoRepository;
 	
@@ -52,7 +47,7 @@ public class PhotoService {
 			
 			Photo photo = new Photo();
 			photo.setIdPhoto(null);
-			photo.setAnnonce(annonce);
+//			photo.setAnnonce(annonce);
 			photo.setUrlPhoto(this.upload(file));
 			
 			photos.add(photo);
@@ -123,5 +118,12 @@ public class PhotoService {
 		}
 				
 		return file;
+	}
+	
+	public ResponseEntity<?> getAllPhotos()throws Exception{
+		List<Photo> photos = new ArrayList<>();
+		photoRepository.findAll().forEach(photos::add);
+		
+		return new ResponseEntity<>(photos, HttpStatus.OK);
 	}
 }

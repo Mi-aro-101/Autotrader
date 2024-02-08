@@ -15,12 +15,14 @@ import org.autotrader.model.Carburant;
 import org.autotrader.model.CategorieVoiture;
 import org.autotrader.model.Favori;
 import org.autotrader.model.ModeleVoiture;
+import org.autotrader.model.Photo;
 import org.autotrader.model.Utilisateur;
 import org.autotrader.repository.AnnonceRepository;
 import org.autotrader.repository.CarburantRepository;
 import org.autotrader.repository.CategorieVoitureRepository;
 import org.autotrader.repository.FavoriRepository;
 import org.autotrader.repository.ModeleVoitureRepository;
+import org.autotrader.repository.PhotoRepository;
 import org.autotrader.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,10 +63,14 @@ public class AnnonceService {
 	PhotoService photoService;
 	
 	@Autowired
+	PhotoRepository photoRepository;
+
+	@Autowired
 	HttpServletRequest request;
 	
 	@Autowired
 	JwtUtils jwt;
+	
 	
 	/**
 	 * Insertion d'une annonce d'un utilisateur qui tente de publier une annonce, (annonce qui sera valider ou refuse par l'admin)
@@ -74,6 +80,7 @@ public class AnnonceService {
 	 */
 	@Transactional
 	public ResponseEntity<?> save(AnnonceDto annonceDto , MultipartFile[] files)throws Exception{
+		System.out.println("Ahnnnnnn ???");
 		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
 		
@@ -135,12 +142,7 @@ public class AnnonceService {
 	 */
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
-		annonceRepository.findAll().forEach(annonces::add);
-		
-//		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
-//		utilisateurRepository.findAll().forEach(utilisateurs::add);
-		
-//		Annonce annonces = annonceRepository.findById(5).orElseThrow(() -> new Exception("No such annonce"));
+		annonceRepository.findByEtat(10).forEach(annonces::add);
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
@@ -197,6 +199,10 @@ public class AnnonceService {
 		List<Annonce> annonces = new ArrayList<>();
 		annonceRepository.findByEtat(5).forEach(annonces::add);
 		
+		for(Annonce annonce : annonces) {
+			this.fillPhotos(annonce);
+		}
+		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 		
 	}
@@ -217,6 +223,36 @@ public class AnnonceService {
 		annonceRepository.save(annonce);
 		
 		return new ResponseEntity<>("Cette annonce a ete refuser", HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> detailsAnnonce(Integer id)throws Exception{
+		Annonce annonce = annonceRepository.findById(id).orElseThrow(() ->
+				new Exception("Cette annonce n'existe pas"));
+		
+		this.fillPhotos(annonce);
+		
+		return new ResponseEntity<>(annonce, HttpStatus.OK);
+	}
+	
+	public void fillPhotos(Annonce annonce)throws Exception{
+		List<Photo> photos = new ArrayList<>();
+		photoRepository.findByIdAnnonce(annonce.getIdAnnonce()).forEach(photos::add);
+		
+//		annonce.setPhotos(photos);
+	}
+	
+	/**
+	 * Get all annonce posted by me
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseEntity<?> getMyAnnonce()throws Exception{
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
+		List<Annonce> myAnnonce = new ArrayList<>();
+		annonceRepository.findByPoster(user.getIdUtilisateur()).forEach(myAnnonce::add);
+		
+		return new ResponseEntity<>(myAnnonce, HttpStatus.OK);
+		
 	}
 	
 }
