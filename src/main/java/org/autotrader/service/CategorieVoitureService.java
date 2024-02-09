@@ -6,6 +6,7 @@ package org.autotrader.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.autotrader.dto.CategorieVoitureDto;
 import org.autotrader.model.CategorieVoiture;
 import org.autotrader.repository.CategorieVoitureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,16 @@ public class CategorieVoitureService {
 		categorieVoitureRepository.findAll().forEach(categorieVoitures::add);
 		
 		return new ResponseEntity<>(categorieVoitures, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> insertCategorieVoitrue(CategorieVoitureDto categorieVoitureDto)throws Exception{
+		CategorieVoiture categorie = new CategorieVoiture();
+		categorie.setIdCategorieVoiture(null);
+		categorie.setNom(categorieVoitureDto.getNom());
+		
+		categorieVoitureRepository.save(categorie);
+		
+		return new ResponseEntity<>("Insertion de categorie voiture avec success", HttpStatus.OK);
 	}
 
 }
