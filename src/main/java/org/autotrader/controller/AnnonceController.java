@@ -136,4 +136,15 @@ public class AnnonceController {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("pas/mes/annonces")
+	public ResponseEntity<?> getAnnonceNotMe(){
+		try {
+			
+			return annonceService.getAnnoncenotMe();
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getCause()+"\n"+e.getMessage(), HttpStatus.OK);
+		}
+	}
 }

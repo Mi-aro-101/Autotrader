@@ -279,4 +279,12 @@ public class AnnonceService {
 		return new ResponseEntity<>(favoris, HttpStatus.OK);
 	}
 	
+	public ResponseEntity<?> getAnnoncenotMe()throws Exception{
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
+		List<Annonce> annonces = new ArrayList<>();
+		annonceRepository.getAnnonceNotMe(user.getIdUtilisateur()).forEach(annonces::add);
+		
+		return new ResponseEntity<>(annonces, HttpStatus.OK);
+	}
+	
 }
