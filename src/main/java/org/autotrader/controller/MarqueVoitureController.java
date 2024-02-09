@@ -3,7 +3,7 @@
  */
 package org.autotrader.controller;
 
-import org.autotrader.service.ModeleVoitureService;
+import org.autotrader.service.MarqueVoitureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path="/api/")
 @CrossOrigin(origins = "*")
-public class ModeleVoitureController {
+public class MarqueVoitureController {
 	
 	@Autowired
-	ModeleVoitureService modeleVoitureService;
+	MarqueVoitureService marqueVoitureService;
 	
-	@GetMapping("public/modele")
-	public ResponseEntity<?> getAllModeleVoiture(){
+	@GetMapping("public/marque")
+	public ResponseEntity<?> getAllMarqueVoitures(){
 		try {
 			
-			return modeleVoitureService.getAllModeleVoiture();
+			return marqueVoitureService.getMarqueVoitures();
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);

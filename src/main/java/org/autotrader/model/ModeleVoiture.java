@@ -3,6 +3,9 @@
  */
 package org.autotrader.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +33,7 @@ public class ModeleVoiture {
 	
 	@ManyToOne
 	@JoinColumn(name="idmarque_voiture")
+	@JsonBackReference
 	MarqueVoiture marqueVoiture;
 	
 	public ModeleVoiture() {
