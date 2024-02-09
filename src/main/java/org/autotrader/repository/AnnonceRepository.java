@@ -21,6 +21,6 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 	@Query(value="SELECT a from Annonce a where a.etat=10")
 	List<Annonce> findByEtat(Integer etat);
 	
-	@Query(value = "SELECT a from Annonce a where a.utilisateur.idUtilisateur=?1")
+	@Query(value = "SELECT a from Annonce a where a.utilisateur.idUtilisateur=?1 and a.etat=10")
 	List<Annonce> findByPoster(Integer idUser);
 }

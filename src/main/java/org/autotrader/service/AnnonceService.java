@@ -165,8 +165,7 @@ public class AnnonceService {
 	@Transactional
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
-//		annonceRepository.findByEtat(10).forEach(annonces::add);
-		annonceRepository.findAll().forEach(annonces::add);
+		annonceRepository.findByEtat(10).forEach(annonces::add);
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
@@ -226,10 +225,6 @@ public class AnnonceService {
 		List<Annonce> annonces = new ArrayList<>();
 		annonceRepository.findByEtat(5).forEach(annonces::add);
 		
-//		for(Annonce annonce : annonces) {
-//			this.fillPhotos(annonce);
-//		}
-		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 		
 	}
@@ -274,6 +269,14 @@ public class AnnonceService {
 		
 		return new ResponseEntity<>(myAnnonce, HttpStatus.OK);
 		
+	}
+	
+	public ResponseEntity<?> getFavoris()throws Exception{
+		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
+		List<Favori> favoris = new ArrayList<>();
+		favoriRepository.getMyFavoris(user.getIdUtilisateur()).forEach(favoris::add);
+		
+		return new ResponseEntity<>(favoris, HttpStatus.OK);
 	}
 	
 }

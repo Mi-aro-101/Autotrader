@@ -103,8 +103,7 @@ public class AnnonceController {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-		
-	
+
 	@GetMapping("annonce/nonvalide")
 	public ResponseEntity<?> getAnnonceNonValide(){
 		try {
@@ -121,6 +120,17 @@ public class AnnonceController {
 		try {
 			
 			return annonceService.getMyAnnonce();
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("mes/favoris")
+	public ResponseEntity<?> getFavoris(){
+		try {
+			
+			return annonceService.getFavoris();
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString()+"\n"+e.getMessage()+"\n"+e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
