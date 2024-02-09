@@ -7,7 +7,11 @@ package org.autotrader.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -80,12 +84,22 @@ public class Annonce {
 	@JoinColumn(name="idmodele_voiture")
 	ModeleVoiture modeleVoiture;
 	
-	@OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Photo> photos;
+	@OneToMany(mappedBy = "annonce", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Photo> photos = new ArrayList<>();
 	
 	public Annonce() {
 		
 	}
+	
+//	public void addPhoto(Photo photo) {
+//		if(photo!= null) {
+//			if(this.photos == null) {
+//				this.photos = new HashSet<>();
+//			}
+//		}
+//		photos.add(photo);
+//	}
 	
 	public Integer getIdAnnonce() {
 		return idAnnonce;
@@ -147,9 +161,9 @@ public class Annonce {
 		return modeleVoiture;
 	}
 	
-	public List<Photo> getPhotos() {
-		return photos;
-	}
+//	public List<Photo> getPhotos() {
+//		return photos;
+//	}
 	
 	public void setIdAnnonce(Integer idAnnonce) {
 		this.idAnnonce = idAnnonce;
@@ -212,7 +226,7 @@ public class Annonce {
 		this.modeleVoiture = modeleVoiture;
 	}
 	
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
+//	public void setPhotos(List<Photo> photos) {
+//		this.photos = photos;
+//	}
 }

@@ -15,7 +15,5 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface PhotoRepository extends JpaRepository<Photo, Integer> {
 	
-	@Query(value = "SELECT p from Photo p where p.annonce.idAnnonce=?1")
-	List<Photo> findByIdAnnonce(Integer idAnnonce);
 
 }

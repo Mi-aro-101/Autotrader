@@ -3,8 +3,11 @@
  */
 package org.autotrader.service;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,9 +82,7 @@ public class AnnonceService {
 	 * @throws Exception
 	 */
 	@Transactional
-	public ResponseEntity<?> save(AnnonceDto annonceDto , MultipartFile[] files)throws Exception{
-		System.out.println("Ahnnnnnn ???");
-		
+	public ResponseEntity<?> save(AnnonceDto annonceDto , MultipartFile[] files)throws Exception{		
 		// Ilay utilisateur alaina @ alalan'ny token fa ataoko static aloha eto
 		
 		// Get the actual user
@@ -116,7 +117,7 @@ public class AnnonceService {
 		LocalDate dateNow = LocalDate.now();
 		annonce.setDateAnnonce(dateNow);
 		
-		LocalTime timeNow = LocalTime.now();
+		LocalTime timeNow = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
 		annonce.setTempsAnnonce(timeNow);
 		annonce.setDescriptionAnnonce(annonceDto.getDescriptionAnnonce());
 		// (Etat = 5) <=> Annonce en attente de validation par l'admin
@@ -127,6 +128,8 @@ public class AnnonceService {
 		annonce.setNombrePorte(annonceDto.getNombrePorte());
 		annonce.setTarif(annonceDto.getTarif());
 		
+//		annonce.setPhotos(photos);
+		
 		annonceRepository.save(annonce);
 		
 		photoService.savePhotos(files, annonce);
@@ -135,14 +138,35 @@ public class AnnonceService {
 		
 	}
 	
+//	public List<Photo> loadPhotos(MultipartFile[] files, Annonce annonce)throws Exception{
+//		File[] fileStock = photoService.convertToFiles(files);
+//		List<Photo> photos = new ArrayList<>();
+//		
+//		for(File file : fileStock) {
+//			Photo photo = new Photo();
+//			photo.setIdPhoto(null);
+//			photo.setAnnonce(annonce);
+//			photo.setUrlPhoto(photoService.upload(file));
+//			
+////			annonce.addPhoto(photo);
+//			photos.add(photo);
+//			
+//			file.delete();
+//		}
+//		
+//		return photos;
+//	}
+	
 	/**
 	 * No auth :: obtenir toutes les annonces
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> getAnnonces()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
-		annonceRepository.findByEtat(10).forEach(annonces::add);
+//		annonceRepository.findByEtat(10).forEach(annonces::add);
+		annonceRepository.findAll().forEach(annonces::add);
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 	}
@@ -153,6 +177,7 @@ public class AnnonceService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> favoriser(Integer idAnnonce)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow();
 		
@@ -177,6 +202,7 @@ public class AnnonceService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> valider(Integer idAnnonce)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow(
 				()-> 
@@ -195,13 +221,14 @@ public class AnnonceService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> getAnnonceNonValide()throws Exception{
 		List<Annonce> annonces = new ArrayList<>();
 		annonceRepository.findByEtat(5).forEach(annonces::add);
 		
-		for(Annonce annonce : annonces) {
-			this.fillPhotos(annonce);
-		}
+//		for(Annonce annonce : annonces) {
+//			this.fillPhotos(annonce);
+//		}
 		
 		return new ResponseEntity<>(annonces, HttpStatus.OK);
 		
@@ -213,6 +240,7 @@ public class AnnonceService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> refuser(Integer idAnnonce)throws Exception{
 		Annonce annonce = annonceRepository.findById(idAnnonce).orElseThrow(
 				()-> 
@@ -225,20 +253,12 @@ public class AnnonceService {
 		return new ResponseEntity<>("Cette annonce a ete refuser", HttpStatus.OK);
 	}
 	
+	@Transactional
 	public ResponseEntity<?> detailsAnnonce(Integer id)throws Exception{
 		Annonce annonce = annonceRepository.findById(id).orElseThrow(() ->
 				new Exception("Cette annonce n'existe pas"));
-		
-		this.fillPhotos(annonce);
-		
+				
 		return new ResponseEntity<>(annonce, HttpStatus.OK);
-	}
-	
-	public void fillPhotos(Annonce annonce)throws Exception{
-		List<Photo> photos = new ArrayList<>();
-		photoRepository.findByIdAnnonce(annonce.getIdAnnonce()).forEach(photos::add);
-		
-//		annonce.setPhotos(photos);
 	}
 	
 	/**
@@ -246,6 +266,7 @@ public class AnnonceService {
 	 * @return
 	 * @throws Exception
 	 */
+	@Transactional
 	public ResponseEntity<?> getMyAnnonce()throws Exception{
 		Utilisateur user = jwt.getActualUser(request, utilisateurRepository);
 		List<Annonce> myAnnonce = new ArrayList<>();
